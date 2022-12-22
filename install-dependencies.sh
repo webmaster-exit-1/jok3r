@@ -493,10 +493,17 @@ print_delimiter
 # ----------------------------------------------------------------------------
 # Install Firefox
 
+<<<<<<< HEAD
 if ! [[ -x "$(command -v firefox-esr)" ]]; then
     print_blue "[~] Install Firefox-esr (for HTML reports and web screenshots)"
     pacman -S --needed --noconfirm firefox-esr
     if ! [[ -x "$(command -v firefox-esr)" ]]; then
+=======
+if ! [ -x "$(command -v firefox-esr)" ]; then
+    print_blue "[~] Install Firefox-esr (for HTML reports and web screenshots)"
+    pacman -S --needed --noconfirm firefox-esr
+    if [ -x "$(command -v firefox-esr)" ]; then
+>>>>>>> master
         print_green "[+] Firefox-esr installed successfully"
     else
         print_red "[!] An error occured during Firefox-esr install"
