@@ -1,26 +1,26 @@
 #!/usr/bin/env bash
 
 print_green() {
-    BOLD_GREEN=$(tput bold ; tput setaf 2)
-    NORMAL=$(tput sgr0)
+    BOLD_GREEN=$(export BOLD_GREEN='\e[1;32m')
+    NORMAL=$(export NORMAL='\e[m')
     echo "${BOLD_GREEN}$1${NORMAL}"
 }
 
 print_yellow() {
-    BOLD_YELLOW=$(tput bold ; tput setaf 3)
-    NORMAL=$(tput sgr0)
+    BOLD_YELLOW=$(export BOLD_YELLOW='\e[1;33m')
+    NORMAL=$(export NORMAL='\e[m')
     echo "${BOLD_YELLOW}$1${NORMAL}"
 }
 
 print_red() {
-    BOLD_RED=$(tput bold ; tput setaf 1)
-    NORMAL=$(tput sgr0)
+    BOLD_RED=$(export BOLD_RED='\e[1;31m')
+    NORMAL=$(export NORMAL='\e[m')
     echo "${BOLD_RED}$1${NORMAL}"
 }
 
 print_blue() {
-    BOLD_BLUE=$(tput bold ; tput setaf 4)
-    NORMAL=$(tput sgr0)
+    BOLD_BLUE=$(export BOLD_BLUE='\e[1;34m')
+    NORMAL=$(export NORMAL='\e[m')
     echo "${BOLD_BLUE}$1${NORMAL}"
 }
 
@@ -46,17 +46,17 @@ if ! [[ "$EUID" == "0" ]]; then
 fi
 
 # Make sure we are on Debian-based OS
-OS="$(lsb_release -sd || grep NAME /etc/*-release) 2> /dev/null)"
-print_blue "[~] Detected OS:"
-echo "$OS"
-if ! [[ "$(echo $OS | grep -q '(arch|arco|blackarch|archstrike|manjaro)')" ]]; then
-    print_green "[+] Arch-based Linux OS detected !"
-else
-    print_red "[!] No Arch-based Linux OS detected Arch, Arco, Blackarch, Archstrike or Manjaro. Will not be able to continue."
-    exit 1
-fi
-echo
-echo
+#OS="$(lsb_release -sd || grep NAME /etc/*-release) 2>/dev/null"
+#print_blue "[~] Detected OS:"
+#echo $OS
+#if ! [[ "$(echo $OS | grep -q '(arch|arco|blackarch|archstrike|manjaro)')" ]]; then
+#    print_green "[+] Arch-based Linux OS detected !"
+#else
+#    print_red "[!] No Arch-based Linux OS detected Arch, Arco, Blackarch, Archstrike or Manjaro. Will not be able to continue."
+#    exit 1
+#fi
+#echo
+#echo
 
 # -----------------------------------------------------------------------------
 # Add BlackArch repository
