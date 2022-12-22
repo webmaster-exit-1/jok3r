@@ -7,11 +7,7 @@ declare -a DIR={
 '/usr',
 '/mnt'
 }
-
 echo $DIR 2&1>/dev/null
-
-read -r "Enter the name of the file to locate and execute: " file
-echo $file 2&1>/dev/null
 
 find $DIR -name $file -okdir |
   while IFS= read -r -d $file; do
