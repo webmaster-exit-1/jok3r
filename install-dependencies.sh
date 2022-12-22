@@ -46,15 +46,15 @@ if ! [[ "$EUID" == "0" ]]; then
 fi
 
 # Make sure we are on Debian-based OS
-#OS="$(lsb_release -sd || grep NAME /etc/*-release) 2> /dev/null)"
-#print_blue "[~] Detected OS:"
-#echo "$OS"
-#if [[ "$(echo $OS | grep -q '(arch|arco|blackarch|archstrike|manjaro)')" ]]; then
-#    print_green "[+] Arch-based Linux OS detected !"
-#else
-#    print_red "[!] No Arch-based Linux OS detected Arch, Arco, Blackarch, Archstrike or Manjaro. Will not be able to continue."
-#    exit 1
-#fi
+OS="$(lsb_release -sd || grep NAME /etc/*-release) 2> /dev/null)"
+print_blue "[~] Detected OS:"
+echo "$OS"
+if ! [[ "$(echo $OS | grep -q '(arch|arco|blackarch|archstrike|manjaro)')" ]]; then
+    print_green "[+] Arch-based Linux OS detected !"
+else
+    print_red "[!] No Arch-based Linux OS detected Arch, Arco, Blackarch, Archstrike or Manjaro. Will not be able to continue."
+    exit 1
+fi
 echo
 echo
 
@@ -77,7 +77,6 @@ if ! [[ -x "$(grep -q "blackarch" /etc/pacman.conf)" ]]; then
         print_green "[+] BlackArch repository added with success"
     else
         print_red "[!] Error occured while adding BlackArch repository"
-
     fi
 else
     print_blue "[~] BlackArch repository detected in /etc/pacman-conf. Updating repositories..."
@@ -118,8 +117,6 @@ PACKAGES="curl dnsutils gawk gcc gnupg iputils openssl libffi lrzip xz perl-libw
 
 for package in $PACKAGES; do
     if ! [[ -x "$(pacman -Ss "$package" | grep "installed")" ]]; then
-        echo
-        #touch /var/log/journal/%m 2>/dev/null
         print_blue "[~] Install ${package} ..."
         pacman -S --needed --noconfirm "$package"
     fi
@@ -132,12 +129,11 @@ print_delimiter
 print_blue "[~] Install Python3.6"
 
 if ! [[ -x "$(command -v python3.6 | grep -q 3 )" ]]; then
-    echo
     wget https://aur.archlinux.org/cgit/aur.git/snapshot/python36.tar.gz
     tar -xzvvf python36.tar.gz
     cd python36 || echo "Error" && sleep 2
-    #read -r -p "Enter your username. python must be installed as user not root: " U
-    runuser "$USER" -c "makepkg -si"
+    read -r -p "Enter your username. python must be installed as user not root: " U
+    runuser "$U" -c "makepkg -si"
     print_green "[+] Python3.6 installed successfully"
 else
     print_red "[!] There was an error installing python3.6"
@@ -154,7 +150,6 @@ if ! [[ -x "$(command -v msfconsole)" ]]; then
         print_green "[+] Metasploit installed successfully"
     else
         print_red "[!] An error occured during Metasploit install"
-
     fi
 else
     print_green "[+] Metasploit is already installed"
@@ -171,7 +166,6 @@ if ! [[ -x "$(command -v nmap)" ]]; then
         print_green "[+] Nmap installed successfully"
     else
         print_red "[!] An error occured during Nmap install"
-
     fi
 else
     print_green "[+] Nmap is already installed"
@@ -360,7 +354,7 @@ if ! [[ -x "$(command -v rvm)" ]]; then
     #shellcheck disable=SC1091
     source /etc/profile.d/rvm.sh
     usermod -aG root rvm
-    usermod -aG "$USER" rvm
+    usermod -aG "$U" rvm
     if ! [[ -x "$(command -v rvm)" ]]; then
         print_green "[+] Ruby RVM installed successfully"
     else
@@ -543,6 +537,7 @@ fi
 print_delimiter
 
 # -----------------------------------------------------------------------------
+# Install missing python module colored
 
 print_blue "[~] Install python3.6 libraries required by Jok3r (if missing)"
 pip3 install -r requirements.txt
@@ -551,18 +546,21 @@ wget https://files.pythonhosted.org/packages/f3/d6/00203998f27ab30b2417998006ad0
 tar -zxvvf colored-1.4.4.tar.gz
 cd colored-1.4.4 || echo "Error, Something Failed"
 python3.6 setup.py install
-cd || echo "Error"
-
+cd - || echo "Error"
+print_green "[+] Python module colored install was successfull"
 print_delimiter
 
 # -----------------------------------------------------------------------------
+# Install python module psycopg2
 
 print_blue "[~] Disable UserWarning related to psycopg2"
 pip3 install --upgrade --force colored psycopg2-binary
 print_delimiter
 
 # -----------------------------------------------------------------------------
+# Dependencies installation complete
 
 print_green "[~] Dependencies installation finished."
+sleep 2
 print_green "[~] IMPORTANT: Make sure to check if any error has been raised"
 echo
