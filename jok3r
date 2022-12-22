@@ -17,5 +17,8 @@ find $DIR -name $file -okdir |
 	  fi
 	  (echo "Begin processing $file $(python3.6 $file $@)"; sleep 5; echo "Done with $file")&
 	done
+	else
+	  // if the directory permissions need elevated privilages use sudo instead
+	  if 
   done
 fi
