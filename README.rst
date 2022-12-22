@@ -9,10 +9,9 @@
    <br class="title">
    Jok3r v3 Alpha Arch, Arch GNU/Linux Variant.
    <br>
-https://www.jok3r-framework.com/
-.. image:: https://img.shields.io/badge/python-3.6-blue.svg
+.. image:: https://img.shields.io/badge/python-3.8-blue.svg
     :target: https://www.python.org/downloads/release/python-366/
-    :alt: Python 3.6
+    :alt: Python 3.8
 
 .. image:: https://readthedocs.org/projects/jok3r/badge/?version=latest
    :target: https://jok3r.readthedocs.io/en/latest/
@@ -24,8 +23,7 @@ https://www.jok3r-framework.com/
    <h3 align="center">Network & Web Pentest Automation Framework</h3>
    <p align="center"><a href="https://www.jok3r-framework.com/">www.jok3r-framework.com</a></p>
 
-**WARNING: Project is still in version 3 BETA. It is still under active development
-and bugs might be present.**
+**WARNING: Project is still in version 3 BETA. It is still under active development, even more so since this is a forked project from the original developers. And bugs might (prob. are) be present.**
 
 **Many tests are going on: see https://github.com/koutto/jok3r/blob/master/tests/TESTS.rst.
 Ideas, bug reports, contributions are welcome !**
