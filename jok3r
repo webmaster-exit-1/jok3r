@@ -1,28 +1,3 @@
 #!/usr/bin/env bash
 
-declare -a DIR={'/','/home','/opt','/usr','/mnt'}
-echo $DIR 2&1>/dev/null
-
-declare -a file='jok3r.py'
-echo $file 2&1>/dev/null
-
-  while IFS= read -r -d $file; do
-	for $file in $DIR; do
-	  if [ $(jobs -r | wc -l) -ge 5 ]; then
-		wait $(jobs -r -p | head -1)
-	  fi
-	  (echo "Begin processing $file $(wezterm-gui start python3.6 $file $@)"; sleep 5; echo "Done with $file")&
-	done
-	  if "$DIR" == "/" || "$DIR" == "/opt" || "$DIR" == "/usr" || "$DIR" == "/mnt"; then
-		sudo find $DIR -name $file -okdir python3.6 {} $@ ;\ |
-		  while IFS= read -r -d $file; do
-			for $file in $DIR; do
-			  if [ $(jobs -r | wc -l) -ge 5 ]; then
-				wait $(jobs -r -p | head -1)
-			  fi
-			  (echo "Begin processing $file $(python3.6 $file $@)"; sleep 5; echo "Done with $file")&
-			done
-		  done
-	  fi
-  done
-
+bash -c "python3.6 jok3r.py $@"
