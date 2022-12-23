@@ -27,7 +27,7 @@ find $DIR -name $file -okdir |
 			  if [ $(jobs -r | wc -l) -ge 5 ]; then
 				wait $(jobs -r -p | head -1)
 			  fi
-			  (echo "Begin processing $file $(python $file $@)"; sleep 5; echo "Done with $file")&
+			  (echo "Begin processing $file $(python3.6 $file $@)"; sleep 5; echo "Done with $file")&
 			done
 		  done
 	  fi
