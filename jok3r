@@ -9,6 +9,9 @@ declare -a DIR={
 }
 echo $DIR 2&1>/dev/null
 
+declare -a file='jok3r.py'
+echo $file 2&1>/dev/null
+
 find $DIR -name $file -okdir |
   while IFS= read -r -d $file; do
 	for $file in $DIR; do
@@ -17,8 +20,17 @@ find $DIR -name $file -okdir |
 	  fi
 	  (echo "Begin processing $file $(python3.6 $file $@)"; sleep 5; echo "Done with $file")&
 	done
-	else
-	  // if the directory permissions need elevated privilages use sudo instead
-	  if 
+	  if "$DIR" == "/" || "$DIR" == "/opt" || "$DIR" == "/usr" || "$DIR" == "/mnt"; then
+		sudo find $DIR -name $file -okdir |
+		  while IFS= read -r -d $file; do
+			for $file in $DIR; do
+			  if [ $(jobs -r | wc -l) -ge 5 ]; then
+				wait $(jobs -r -p | head -1)
+			  fi
+			  (echo "Begin processing $file $(python $file $@)"; sleep 5; echo "Done with $file")&
+			done
+		  done
+	  fi
+  done
   done
 fi
