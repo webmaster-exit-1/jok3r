@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-bash -c "python3.6 jok3r.py $@"
+bash -c "/usr/bin/python3.6 jok3r.py $@"
