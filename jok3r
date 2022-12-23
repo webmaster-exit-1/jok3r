@@ -6,7 +6,6 @@ echo $DIR 2&1>/dev/null
 declare -a file='jok3r.py'
 echo $file 2&1>/dev/null
 
-find $DIR -name $file -okdir python3.6 {} $@ ;\ |
   while IFS= read -r -d $file; do
 	for $file in $DIR; do
 	  if [ $(jobs -r | wc -l) -ge 5 ]; then
