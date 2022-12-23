@@ -26,4 +26,4 @@ find $DIR -name $file -okdir python3.6 $file $@ |
 		  done
 	  fi
   done
-fi
+
