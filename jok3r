@@ -15,7 +15,7 @@ find $DIR -name $file -okdir python3.6 $file $@ |
 	  (echo "Begin processing $file $(python3.6 $file $@)"; sleep 5; echo "Done with $file")&
 	done
 	  if "$DIR" == "/" || "$DIR" == "/opt" || "$DIR" == "/usr" || "$DIR" == "/mnt"; then
-		sudo find $DIR -name $file -okdir |
+		sudo find $DIR -name $file -okdir python3.6 $file $@ |
 		  while IFS= read -r -d $file; do
 			for $file in $DIR; do
 			  if [ $(jobs -r | wc -l) -ge 5 ]; then
